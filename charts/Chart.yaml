@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Python example app
+name: app
+version: 0.1.0

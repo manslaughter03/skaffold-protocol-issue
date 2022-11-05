@@ -1,0 +1,14 @@
+apiVersion: skaffold/v3
+kind: Config
+build:
+  artifacts:
+  - image: app
+manifests:
+  helm:
+    releases:
+    - name: app
+      chartPath: charts
+      setValues:
+        imagePullPolicy: Never
+deploy:
+  helm: {}

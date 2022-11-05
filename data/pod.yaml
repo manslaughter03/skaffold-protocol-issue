@@ -1,0 +1,157 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    debug.cloud.google.com/config: '{"app":{"artifact":"app","runtime":"python","workingDir":"/usr/src","ports":{"dap":5678}}}'
+  creationTimestamp: "2022-11-05T15:27:27Z"
+  generateName: app-5dd68b98f-
+  labels:
+    app: app
+    pod-template-hash: 5dd68b98f
+    skaffold.dev/run-id: d15ed756-a8f4-421c-90be-a91cd191af5d
+  name: app-5dd68b98f-kr979
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: app-5dd68b98f
+    uid: c99c4e79-7120-4f1b-8352-856684b43801
+  resourceVersion: "16803"
+  uid: d536958b-f2f6-4552-bb33-b1ef68e9e3f9
+spec:
+  containers:
+  - args:
+    - -m
+    - app
+    command:
+    - /dbg/python/launcher
+    - --mode
+    - debugpy
+    - --port
+    - "5678"
+    - --
+    - python
+    image: app:36f76829cf227397213ff89a4c5517a230ba1223724b59a67feb98713bcce8e6
+    imagePullPolicy: Never
+    name: app
+    ports:
+    - containerPort: 5678
+      name: dap
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /dbg
+      name: debugging-support-files
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-2zqrc
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  initContainers:
+  - image: gcr.io/k8s-skaffold/skaffold-debug-support/python
+    imagePullPolicy: Always
+    name: install-python-debug-support
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /dbg
+      name: debugging-support-files
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-2zqrc
+      readOnly: true
+  nodeName: kind-worker
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - emptyDir: {}
+    name: debugging-support-files
+  - name: kube-api-access-2zqrc
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-05T15:27:33Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-05T15:27:34Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-05T15:27:34Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-11-05T15:27:27Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://2adc220ed39f16ae564c5193816ef6371ad82382981cd0c306ddf75599e72630
+    image: docker.io/library/app:36f76829cf227397213ff89a4c5517a230ba1223724b59a67feb98713bcce8e6
+    imageID: docker.io/library/import-2022-11-05@sha256:a326c50e062126e3a399039d431273357caf5f18259dff4d48f880fd136f751b
+    lastState: {}
+    name: app
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-11-05T15:27:33Z"
+  hostIP: 172.18.0.2
+  initContainerStatuses:
+  - containerID: containerd://13a20c004caa2f39cdb9148993bfb8d4b2531f4cb5977a67e87d1fd9d420d13c
+    image: gcr.io/k8s-skaffold/skaffold-debug-support/python:latest
+    imageID: gcr.io/k8s-skaffold/skaffold-debug-support/python@sha256:4ca4ccd4dac07dea880f23799a74f0878d5e5ea910c70fa909fa209ca4f3daaf
+    lastState: {}
+    name: install-python-debug-support
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: containerd://13a20c004caa2f39cdb9148993bfb8d4b2531f4cb5977a67e87d1fd9d420d13c
+        exitCode: 0
+        finishedAt: "2022-11-05T15:27:30Z"
+        reason: Completed
+        startedAt: "2022-11-05T15:27:28Z"
+  phase: Running
+  podIP: 10.244.1.22
+  podIPs:
+  - ip: 10.244.1.22
+  qosClass: BestEffort
+  startTime: "2022-11-05T15:27:27Z"

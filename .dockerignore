@@ -1,0 +1,12 @@
+charts
+Dockerfile
+scripts
+shell.nix
+skaffold*.yaml
+README.md
+.git
+.kpt-pipeline
+__pycache__
+**/__pycache__
+.envrc
+.dockerignore
